@@ -396,7 +396,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-31|9-31|10-19|23-30">
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="9-31|10-19|23-30">
               <script type="text/template">
                 import { useForm, FormProvider } from "react-hook-form";
 
@@ -439,7 +439,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-13|4|9|5|10">
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="3-13|4|9|5|10">
               <script type="text/template">
                 import { useFormContext } from "react-hook-form";
 
@@ -472,7 +472,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-13|12|3-8|10|12">
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-13|3-8|10|12">
               const { mongu } = require('mongu');
 
               const expr = {
@@ -556,11 +556,16 @@
           data-background-size="auto"
           data-background-repeat="repeat"
         >
+          <h2>How To Use</h2>
+          <p>Create the components and the JSON that defines the form</p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
           <h2>Components</h2>
-          <p>
-            To use Formity we will create the components that our forms will
-            use, and we will provide them using the FormityProvider component.
-          </p>
+          <p>Create the components and provide them using FormityProvider</p>
         </section>
         <section
           data-background-image="./background.svg"
@@ -623,11 +628,7 @@
           data-background-repeat="repeat"
         >
           <h2>Form</h2>
-          <p>
-            To create a form we will use the Formity component. This component
-            receives a JSON that defines the form and a function that will be
-            called when the form is submitted.
-          </p>
+          <p>Create a JSON that defines the form and pass it to Formity</p>
         </section>
         <section
           data-background-image="./background.svg"
@@ -635,7 +636,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="24|9|14-16">
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="31|9|14-16">
               <script type="text/template">
                 import { useState } from "react";
 
@@ -654,18 +655,24 @@
                     setResult(result);
                   }
                 
+                  if (result) {
+                    return (
+                      <Center>
+                        <Card>
+                          <Result result={result} />
+                        </Card>
+                      </Center>
+                    );
+                  }
+                
                   return (
                     <Center>
                       <Card>
-                        {result ? (
-                          <Result result={result} />
-                        ) : (
-                          <Formity form={form} onSubmit={handleSubmit} />
-                        )}
+                        <Formity form={form} onSubmit={handleSubmit} />
                       </Card>
                     </Center>
                   );
-                }
+                }                
               </script>
             </code>
           </pre>
@@ -676,12 +683,7 @@
           data-background-repeat="repeat"
         >
           <h2>JSON</h2>
-          <p>
-            The JSON that defines the form is an array of objects. Each object
-            can be of type <strong>form</strong>, <strong>variables</strong>,
-            <strong>cond</strong>, <strong>loop</strong> or
-            <strong>return</strong>.
-          </p>
+          <p>The JSON that defines the form is an array of elements</p>
         </section>
         <section
           data-background-image="./background.svg"
@@ -970,11 +972,7 @@
           data-background-repeat="repeat"
         >
           <h2>Form</h2>
-          <p>
-            The <strong>form</strong> object defines a step in the form. It
-            defines the default values, the validation rules and the components
-            to render.
-          </p>
+          <p>The <strong>form</strong> element defines a step in the form</p>
         </section>
         <section
           data-background-image="./background.svg"
@@ -1187,7 +1185,7 @@
         >
           <h2>Return</h2>
           <p>
-            The <strong>return</strong> object defines what the form returns.
+            The <strong>return</strong> element defines what the form returns
           </p>
         </section>
         <section
@@ -1278,7 +1276,7 @@
           data-background-repeat="repeat"
         >
           <h2>Variables</h2>
-          <p>The <strong>variables</strong> object defines variables.</p>
+          <p>The <strong>variables</strong> element defines variables</p>
         </section>
         <section
           data-background-image="./background.svg"
@@ -1302,9 +1300,10 @@
           <pre>
             <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
               {
-                "variable": "value",
-                "variable": "value",
-                "...": "..."
+                "variables": {
+                  "fullName": "Marti Serra",
+                  "isAdult": true
+                }
               }
             </code>
           </pre>
@@ -1388,8 +1387,8 @@
           data-background-size="auto"
           data-background-repeat="repeat"
         >
-          <h2>Cond</h2>
-          <p>The <strong>cond</strong> object defines a condition.</p>
+          <h2>Condition</h2>
+          <p>The <strong>condition</strong> element defines a condition</p>
         </section>
         <section
           data-background-image="./background.svg"
@@ -1401,8 +1400,8 @@
               {
                 "cond": {
                   "if": "expression",
-                  "then": ["object", "object", "..."],
-                  "else": ["object", "object", "..."]
+                  "then": ["element", "element", "..."],
+                  "else": ["element", "element", "..."]
                 }
               }
             </code>
@@ -1522,7 +1521,7 @@
           data-background-repeat="repeat"
         >
           <h2>Loop</h2>
-          <p>The <strong>loop</strong> object defines a loop.</p>
+          <p>The <strong>loop</strong> element defines a loop</p>
         </section>
         <section
           data-background-image="./background.svg"
@@ -1534,7 +1533,7 @@
               {
                 "loop": {
                   "while": "expression",
-                  "do": ["object", "object", "..."]
+                  "do": ["element", "element", "..."]
                 }
               }
             </code>
@@ -1643,13 +1642,19 @@
           data-background-size="auto"
           data-background-repeat="repeat"
         >
+          <h2>Future</h2>
+          <p>Using this package can become the best way to manage forms</p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
           <h1>Thanks</h1>
           <h2 style="font-weight: 500">
             <small>
               You can find this package at
-              <a href="https://www.npmjs.com/package/formity"
-                >npmjs.com/package/formity</a
-              >
+              <a href="https://martiserra.me/formity">martiserra.me/formity</a>
             </small>
           </h2>
           <p>
