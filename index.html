@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Formity</title>
+    <link rel="icon" type="image/svg+xml" href="./formity.svg" />
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/reach.css" />
+    <link rel="stylesheet" href="plugin/highlight/github-dark.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h1>Formity</h1>
+          <h2 style="font-weight: 500">
+            <small>Create dynamic React forms with just a JSON</small>
+          </h2>
+          <p>
+            <small>
+              Created by <a href="https://martiserra.me">Martí Serra Molina</a>
+            </small>
+          </p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Problem</h2>
+          <p>
+            There is no easy way to create dynamic forms in React. Dynamic forms
+            are forms of multiple steps, in which the questions in each step
+            depend on the answers given in the previous ones.
+          </p>
+        </section>
+        <section
+          data-background-iframe="https://formity-examples.vercel.app/a"
+        ></section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Solution</h2>
+          <p>
+            Formity solves this problem by allowing you to create dynamic forms
+            with just a JSON. In this JSON you can define all kinds of logic
+            using variables, conditions, loops and operators.
+          </p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-271|2-51|4-7|8-17|18-49|133-146|88-132|90|91-129|130|186-262|188|189-260|263-270">
+              [
+                {
+                  "form": {
+                    "defaultValues": {
+                      "name": "",
+                      "surname": ""
+                    },
+                    "resolver": {
+                      "name": [
+                        [{ "_$ne": ["_$name", ""] }, "Required"],
+                        [{ "_$lt": [{ "_$strLen": "_$name" }, 20] }, "Max. 20 characters"]
+                      ],
+                      "surname": [
+                        [{ "_$ne": ["_$surname", ""] }, "Required"],
+                        [{ "_$lt": [{ "_$strLen": "_$surname" }, 20] }, "Max. 20 characters"]
+                      ]
+                    },
+                    "render": [
+                      {
+                        "LayoutForm": {
+                          "heading": "What is your name?",
+                          "text": "Fill in your name and surname",
+                          "fields": [
+                            {
+                              "TextField": {
+                                "name": "name",
+                                "label": "Name",
+                                "placeholder": "Enter your name"
+                              }
+                            },
+                            {
+                              "TextField": {
+                                "name": "surname",
+                                "label": "Surname",
+                                "placeholder": "Enter your surname"
+                              }
+                            }
+                          ],
+                          "buttons": [
+                            {
+                              "Button": {
+                                "type": "submit",
+                                "children": "Next"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "defaultValues": {
+                      "age": 25
+                    },
+                    "resolver": {},
+                    "render": [
+                      {
+                        "LayoutForm": {
+                          "heading": "What is your age?",
+                          "text": "Select your age",
+                          "fields": [
+                            {
+                              "Slider": {
+                                "name": "age",
+                                "label": "Age",
+                                "min": 1,
+                                "max": 100,
+                                "step": 1
+                              }
+                            }
+                          ],
+                          "buttons": [
+                            { "Back": { "children": "Back" } },
+                            {
+                              "Button": {
+                                "type": "submit",
+                                "children": "Next"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "cond": {
+                    "if": { "$gte": ["$age", 18] },
+                    "then": [
+                      {
+                        "form": {
+                          "defaultValues": {
+                            "drivingLicense": false
+                          },
+                          "resolver": {},
+                          "render": [
+                            {
+                              "LayoutForm": {
+                                "heading": "Do you have a driving license?",
+                                "text": "Select your answer",
+                                "fields": [
+                                  {
+                                    "RadioGroup": {
+                                      "name": "drivingLicense",
+                                      "label": "Driving license",
+                                      "list": [
+                                        { "value": false, "label": "No" },
+                                        { "value": true, "label": "Yes" }
+                                      ]
+                                    }
+                                  }
+                                ],
+                                "buttons": [
+                                  { "Back": { "children": "Back" } },
+                                  {
+                                    "Button": {
+                                      "type": "submit",
+                                      "children": "Next"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "else": [{ "variables": { "drivingLicense": false } }]
+                  }
+                },
+                {
+                  "variables": {
+                    "sportsList": [
+                      { "value": "football", "label": "Football" },
+                      { "value": "basketball", "label": "Basketball" },
+                      { "value": "tennis", "label": "Tennis" }
+                    ],
+                    "questions": {
+                      "football": "What days do you play football?",
+                      "basketball": "What days do you play basketball?",
+                      "tennis": "What days do you play tennis?"
+                    }
+                  }
+                },
+                {
+                  "form": {
+                    "defaultValues": {
+                      "sports": []
+                    },
+                    "resolver": {
+                      "sports": [
+                        [{ "_$ne": [{ "_$size": "_$sports" }, 0] }, "At least one sport"]
+                      ]
+                    },
+                    "render": [
+                      {
+                        "LayoutForm": {
+                          "heading": "What sports do you like?",
+                          "text": "Select your sports",
+                          "fields": [
+                            {
+                              "CheckboxGroup": {
+                                "name": "sports",
+                                "label": "Sports",
+                                "list": "$sportsList"
+                              }
+                            }
+                          ],
+                          "buttons": [
+                            { "Back": { "children": "Back" } },
+                            {
+                              "Button": {
+                                "type": "submit",
+                                "children": "Next"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { "variables": { "i": 0 } },
+                {
+                  "loop": {
+                    "while": { "$lt": ["$i", { "$size": "$sports" }] },
+                    "do": [
+                      { "variables": { "sport": { "$arrayElemAt": ["$sports", "$i"] } } },
+                      {
+                        "variables": {
+                          "question": {
+                            "$getField": { "field": "$sport", "input": "$questions" }
+                          }
+                        }
+                      },
+                      {
+                        "form": {
+                          "defaultValues": { "days": [] },
+                          "resolver": {
+                            "days": [
+                              [{ "_$ne": [{ "_$size": "_$days" }, 0] }, "At least one day"]
+                            ]
+                          },
+                          "render": [
+                            {
+                              "LayoutForm": {
+                                "heading": "$question",
+                                "text": "Select the days",
+                                "fields": [
+                                  {
+                                    "CheckboxGroup": {
+                                      "name": "days",
+                                      "label": "Days",
+                                      "list": [
+                                        { "value": "monday", "label": "Monday" },
+                                        { "value": "tuesday", "label": "Tuesday" },
+                                        { "value": "wednesday", "label": "Wednesday" },
+                                        { "value": "thursday", "label": "Thursday" },
+                                        { "value": "friday", "label": "Friday" },
+                                        { "value": "saturday", "label": "Saturday" },
+                                        { "value": "sunday", "label": "Sunday" }
+                                      ]
+                                    }
+                                  }
+                                ],
+                                "buttons": [
+                                  { "Back": { "children": "Back" } },
+                                  {
+                                    "Button": {
+                                      "type": "submit",
+                                      "children": "Next"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "variables": {
+                          "sports": {
+                            "$map": {
+                              "input": "$sports",
+                              "as": "sport",
+                              "in": {
+                                "$cond": {
+                                  "if": { "$eq": ["$$sport", "$sport"] },
+                                  "then": { "sport": "$$sport", "days": "$days" },
+                                  "else": "$$sport"
+                                }
+                              }
+                            }
+                          },
+                          "i": { "$add": ["$i", 1] }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "return": {
+                    "name": { "$concat": ["$name", " ", "$surname"] },
+                    "age": "$age",
+                    "drivingLicense": "$drivingLicense",
+                    "sports": "$sports"
+                  }
+                }
+              ]
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Advantages</h2>
+          <p>
+            Since Formity allows you to define these forms as JSON objects, you
+            can store them as JSON files, send them through the network and even
+            store them in a database like MongoDB.
+          </p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Mongu</h2>
+          <p>
+            Formity depends on the package Mongu. It is a package that lets you
+            use the expressions you would use in MongoDB, but in JavaScript.
+          </p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-13|12|3-8|10|12">
+              const { mongu } = require('mongu');
+
+              const expr = {
+                fullName: {
+                  $concat: [{ $toLower: '$name' }, ' ', { $toLower: '$surname' }],
+                },
+                isAdult: { $gte: ['$age', 18] },
+              };
+              
+              const vars = { name: 'Marti', surname: 'Serra', age: 24 };
+              
+              console.log(mongu(expr, vars)); // { fullName: "marti serra", isAdult: true }
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              const { mongu } = require("mongu");
+
+              const expr = { $add: ["$a", "$b"] };
+              
+              const vars = { a: 5, b: 10 };
+              
+              console.log(mongu(expr, vars)); // 15
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              const { mongu } = require("mongu");
+
+              const expr = {
+                $cond: {
+                  if: { $gte: ["$age", 18] },
+                  then: "You are an adult",
+                  else: "You are not an adult",
+                },
+              };
+              
+              const vars = { age: 18 };
+              
+              console.log(mongu(expr, vars)); // "You are an adult"
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              const { mongu } = require("mongu");
+
+              const expr = {
+                $map: {
+                  input: "$numbers",
+                  as: "num",
+                  in: { $multiply: ["$$num", 5] },
+                },
+              };
+              
+              const vars = { numbers: [1, 2, 3] };
+              
+              console.log(mongu(expr, vars)); // [5, 10, 15]
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Components</h2>
+          <p>
+            To use Formity we will create the components that our forms will
+            use, and we will provide them using the FormityProvider component.
+          </p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="38-40|22-33">
+              <script type="text/template">
+                import "@radix-ui/themes/styles.css";
+
+                import React from "react";
+                import ReactDOM from "react-dom/client";
+                import App from "./App.jsx";
+                import "./main.css";
+                
+                import { Theme, Button } from "@radix-ui/themes";
+                
+                import { FormityProvider } from "formity";
+                
+                import LayoutForm from "./components/layout-form";
+                import TextField from "./components/form/text-field";
+                import TextArea from "./components/form/text-area";
+                import Select from "./components/form/select";
+                import RadioGroup from "./components/form/radio-group";
+                import CheckboxGroup from "./components/form/checkbox-group";
+                import Slider from "./components/form/slider";
+                import Range from "./components/form/range";
+                import Back from "./components/back";
+                
+                const components = {
+                  LayoutForm,
+                  TextField,
+                  TextArea,
+                  Select,
+                  RadioGroup,
+                  CheckboxGroup,
+                  Slider,
+                  Range,
+                  Button,
+                  Back,
+                };
+                
+                ReactDOM.createRoot(document.getElementById("root")).render(
+                  <React.StrictMode>
+                    <Theme panelBackground="translucent">
+                      <FormityProvider components={components}>
+                        <App />
+                      </FormityProvider>
+                    </Theme>
+                  </React.StrictMode>
+                );
+              </script>
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="3-22">
+              <script type="text/template">
+                import { Grid, Flex, Heading, Text } from "@radix-ui/themes";
+
+                export default function LayoutForm({ heading, text, fields, buttons }) {
+                  return (
+                    <Flex direction="column" gap="5">
+                      <Flex direction="column" gap="4">
+                        <Heading size="4" trim="both">
+                          {heading}
+                        </Heading>
+                        <Text size="2" color="gray" trim="both">
+                          {text}
+                        </Text>
+                      </Flex>
+                      <Flex direction="column" gap="4">
+                        {fields}
+                      </Flex>
+                      <Grid columns={`${buttons.length}`} gap="4">
+                        {buttons}
+                      </Grid>
+                    </Flex>
+                  );
+                }
+              </script>
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="10-26">
+              <script type="text/template">
+                import styles from "./text-field.module.css";
+
+                import { useFormContext } from "react-hook-form";
+                
+                import { Text, TextField as RadixTextField } from "@radix-ui/themes";
+                
+                import Label from "../label";
+                import ErrorMessage from "../error-message";
+                
+                export default function TextField({ label, name, placeholder }) {
+                  const { register, formState } = useFormContext();
+                  const error = formState.errors[name];
+                  return (
+                    <Text as="label" className={styles.label}>
+                      <Label as="div" mb="1" error={error}>
+                        {label}
+                      </Label>
+                      <RadixTextField.Input
+                        placeholder={placeholder}
+                        {...register(name)}
+                        {...(error && { color: "red" })}
+                      />
+                      {error && <ErrorMessage mt="1">{error.message}</ErrorMessage>}
+                    </Text>
+                  );
+                }
+              </script>
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Form</h2>
+          <p>
+            To create a form we will use the Formity component. This component
+            receives a JSON that defines the form and a function that will be
+            called when the form is submitted.
+          </p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="24|9|14-16">
+              <script type="text/template">
+                import { useState } from "react";
+
+                import { Formity } from "formity";
+                
+                import Center from "./components/center";
+                import Card from "./components/card";
+                import Result from "./components/result";
+                
+                import form from "./form.json";
+                
+                export default function App() {
+                  const [result, setResult] = useState(null);
+                
+                  function handleSubmit(result) {
+                    setResult(result);
+                  }
+                
+                  return (
+                    <Center>
+                      <Card>
+                        {result ? (
+                          <Result result={result} />
+                        ) : (
+                          <Formity form={form} onSubmit={handleSubmit} />
+                        )}
+                      </Card>
+                    </Center>
+                  );
+                }
+              </script>
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>JSON</h2>
+          <p>
+            The JSON that defines the form is an array of objects. Each object
+            can be of type <strong>form</strong>, <strong>variables</strong>,
+            <strong>cond</strong>, <strong>loop</strong> or
+            <strong>return</strong>.
+          </p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-271|2-51|133-146|88-132|186-262|263-270">
+              [
+                {
+                  "form": {
+                    "defaultValues": {
+                      "name": "",
+                      "surname": ""
+                    },
+                    "resolver": {
+                      "name": [
+                        [{ "_$ne": ["_$name", ""] }, "Required"],
+                        [{ "_$lt": [{ "_$strLen": "_$name" }, 20] }, "Max. 20 characters"]
+                      ],
+                      "surname": [
+                        [{ "_$ne": ["_$surname", ""] }, "Required"],
+                        [{ "_$lt": [{ "_$strLen": "_$surname" }, 20] }, "Max. 20 characters"]
+                      ]
+                    },
+                    "render": [
+                      {
+                        "LayoutForm": {
+                          "heading": "What is your name?",
+                          "text": "Fill in your name and surname",
+                          "fields": [
+                            {
+                              "TextField": {
+                                "name": "name",
+                                "label": "Name",
+                                "placeholder": "Enter your name"
+                              }
+                            },
+                            {
+                              "TextField": {
+                                "name": "surname",
+                                "label": "Surname",
+                                "placeholder": "Enter your surname"
+                              }
+                            }
+                          ],
+                          "buttons": [
+                            {
+                              "Button": {
+                                "type": "submit",
+                                "children": "Next"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "form": {
+                    "defaultValues": {
+                      "age": 25
+                    },
+                    "resolver": {},
+                    "render": [
+                      {
+                        "LayoutForm": {
+                          "heading": "What is your age?",
+                          "text": "Select your age",
+                          "fields": [
+                            {
+                              "Slider": {
+                                "name": "age",
+                                "label": "Age",
+                                "min": 1,
+                                "max": 100,
+                                "step": 1
+                              }
+                            }
+                          ],
+                          "buttons": [
+                            { "Back": { "children": "Back" } },
+                            {
+                              "Button": {
+                                "type": "submit",
+                                "children": "Next"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "cond": {
+                    "if": { "$gte": ["$age", 18] },
+                    "then": [
+                      {
+                        "form": {
+                          "defaultValues": {
+                            "drivingLicense": false
+                          },
+                          "resolver": {},
+                          "render": [
+                            {
+                              "LayoutForm": {
+                                "heading": "Do you have a driving license?",
+                                "text": "Select your answer",
+                                "fields": [
+                                  {
+                                    "RadioGroup": {
+                                      "name": "drivingLicense",
+                                      "label": "Driving license",
+                                      "list": [
+                                        { "value": false, "label": "No" },
+                                        { "value": true, "label": "Yes" }
+                                      ]
+                                    }
+                                  }
+                                ],
+                                "buttons": [
+                                  { "Back": { "children": "Back" } },
+                                  {
+                                    "Button": {
+                                      "type": "submit",
+                                      "children": "Next"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "else": [{ "variables": { "drivingLicense": false } }]
+                  }
+                },
+                {
+                  "variables": {
+                    "sportsList": [
+                      { "value": "football", "label": "Football" },
+                      { "value": "basketball", "label": "Basketball" },
+                      { "value": "tennis", "label": "Tennis" }
+                    ],
+                    "questions": {
+                      "football": "What days do you play football?",
+                      "basketball": "What days do you play basketball?",
+                      "tennis": "What days do you play tennis?"
+                    }
+                  }
+                },
+                {
+                  "form": {
+                    "defaultValues": {
+                      "sports": []
+                    },
+                    "resolver": {
+                      "sports": [
+                        [{ "_$ne": [{ "_$size": "_$sports" }, 0] }, "At least one sport"]
+                      ]
+                    },
+                    "render": [
+                      {
+                        "LayoutForm": {
+                          "heading": "What sports do you like?",
+                          "text": "Select your sports",
+                          "fields": [
+                            {
+                              "CheckboxGroup": {
+                                "name": "sports",
+                                "label": "Sports",
+                                "list": "$sportsList"
+                              }
+                            }
+                          ],
+                          "buttons": [
+                            { "Back": { "children": "Back" } },
+                            {
+                              "Button": {
+                                "type": "submit",
+                                "children": "Next"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                { "variables": { "i": 0 } },
+                {
+                  "loop": {
+                    "while": { "$lt": ["$i", { "$size": "$sports" }] },
+                    "do": [
+                      { "variables": { "sport": { "$arrayElemAt": ["$sports", "$i"] } } },
+                      {
+                        "variables": {
+                          "question": {
+                            "$getField": { "field": "$sport", "input": "$questions" }
+                          }
+                        }
+                      },
+                      {
+                        "form": {
+                          "defaultValues": { "days": [] },
+                          "resolver": {
+                            "days": [
+                              [{ "_$ne": [{ "_$size": "_$days" }, 0] }, "At least one day"]
+                            ]
+                          },
+                          "render": [
+                            {
+                              "LayoutForm": {
+                                "heading": "$question",
+                                "text": "Select the days",
+                                "fields": [
+                                  {
+                                    "CheckboxGroup": {
+                                      "name": "days",
+                                      "label": "Days",
+                                      "list": [
+                                        { "value": "monday", "label": "Monday" },
+                                        { "value": "tuesday", "label": "Tuesday" },
+                                        { "value": "wednesday", "label": "Wednesday" },
+                                        { "value": "thursday", "label": "Thursday" },
+                                        { "value": "friday", "label": "Friday" },
+                                        { "value": "saturday", "label": "Saturday" },
+                                        { "value": "sunday", "label": "Sunday" }
+                                      ]
+                                    }
+                                  }
+                                ],
+                                "buttons": [
+                                  { "Back": { "children": "Back" } },
+                                  {
+                                    "Button": {
+                                      "type": "submit",
+                                      "children": "Next"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "variables": {
+                          "sports": {
+                            "$map": {
+                              "input": "$sports",
+                              "as": "sport",
+                              "in": {
+                                "$cond": {
+                                  "if": { "$eq": ["$$sport", "$sport"] },
+                                  "then": { "sport": "$$sport", "days": "$days" },
+                                  "else": "$$sport"
+                                }
+                              }
+                            }
+                          },
+                          "i": { "$add": ["$i", 1] }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "return": {
+                    "name": { "$concat": ["$name", " ", "$surname"] },
+                    "age": "$age",
+                    "drivingLicense": "$drivingLicense",
+                    "sports": "$sports"
+                  }
+                }
+              ]
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Form</h2>
+          <p>
+            The <strong>form</strong> object defines a step in the form. It
+            defines the default values, the validation rules and the components
+            to render.
+          </p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              {
+                "form": "expression"
+              }
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+          data-auto-animate
+        >
+          <pre data-id="code-animation">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-13">
+              {
+                "form": {
+                  "defaultValues": "...",
+                  "resolver": "...",
+                  "render": "..."
+                }
+              }
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+          data-auto-animate
+        >
+          <pre data-id="code-animation">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="3-6">
+              {
+                "form": {
+                  "defaultValues": {
+                    "name": "",
+                    "surname": ""
+                  },
+                  "resolver": "...",
+                  "render": "..."
+                }
+              }
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+          data-auto-animate
+        >
+          <pre data-id="code-animation">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="4-13">
+              {
+                "form": {
+                  "defaultValues": "...",
+                  "resolver": {
+                    "name": [
+                      [{ "$ne": ["$name", ""] }, "Required"],
+                      [{ "$lt": [{ "$strLen": "$name" }, 20] }, "Max. 20 characters"]
+                    ],
+                    "surname": [
+                      [{ "$ne": ["$surname", ""] }, "Required"],
+                      [{ "$lt": [{ "$strLen": "$surname" }, 20] }, "Max. 20 characters"]
+                    ]
+                  },
+                  "render": "..."
+                }
+              }
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+          data-auto-animate
+        >
+          <pre data-id="code-animation">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="5-36">
+              {
+                "form": {
+                  "defaultValues": "...",
+                  "resolver": "...",
+                  "render": [
+                    {
+                      "LayoutForm": {
+                        "heading": "What is your name?",
+                        "text": "Fill in your name",
+                        "fields": [
+                          {
+                            "TextField": {
+                              "name": "name",
+                              "label": "Name",
+                              "placeholder": "Enter your name"
+                            }
+                          },
+                          {
+                            "TextField": {
+                              "name": "surname",
+                              "label": "Surname",
+                              "placeholder": "Enter your surname"
+                            }
+                          }
+                        ],
+                        "buttons": [
+                          {
+                            "Button": {
+                              "type": "submit",
+                              "children": "Next"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Example</h2>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-56|2-49|4-7|8-13|14-47|50-55">
+              [
+                {
+                  "form": {
+                    "defaultValues": {
+                      "name": "Marti",
+                      "age": 24
+                    },
+                    "resolver": {
+                      "name": [
+                        [{ "_$ne": ["_$name", ""] }, "Required"],
+                        [{ "_$lt": [{ "_$strLen": "_$name" }, 20] }, "No more than 20 chars"]
+                      ]
+                    },
+                    "render": [
+                      {
+                        "LayoutForm": {
+                          "heading": "What is your name and age?",
+                          "text": "Fill in your name and select your age",
+                          "fields": [
+                            {
+                              "TextField": {
+                                "name": "name",
+                                "label": "Name",
+                                "placeholder": "Enter your name"
+                              }
+                            },
+                            {
+                              "Slider": {
+                                "name": "age",
+                                "label": "Age",
+                                "min": 1,
+                                "max": 100,
+                                "step": 1
+                              }
+                            }
+                          ],
+                          "buttons": [
+                            {
+                              "Button": {
+                                "type": "submit",
+                                "children": "Next"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "return": {
+                    "name": "$name",
+                    "age": "$age"
+                  }
+                }
+              ]
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-iframe="https://formity-examples.vercel.app/b"
+        ></section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Return</h2>
+          <p>
+            The <strong>return</strong> object defines what the form returns.
+          </p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              {
+                "return": "expression"
+              }
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Example</h2>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-49|2-45|46-48">
+              [
+                {
+                  "form": {
+                    "defaultValues": {
+                      "name": "",
+                      "surname": ""
+                    },
+                    "resolver": {
+                      "name": [[{ "_$ne": ["_$name", ""] }, "Required"]],
+                      "surname": [[{ "_$ne": ["_$surname", ""] }, "Required"]]
+                    },
+                    "render": [
+                      {
+                        "LayoutForm": {
+                          "heading": "What is your name and surname?",
+                          "text": "Fill in your name and surname",
+                          "fields": [
+                            {
+                              "TextField": {
+                                "name": "name",
+                                "label": "Name",
+                                "placeholder": "Enter your name"
+                              }
+                            },
+                            {
+                              "TextField": {
+                                "name": "surname",
+                                "label": "Surname",
+                                "placeholder": "Enter your surname"
+                              }
+                            }
+                          ],
+                          "buttons": [
+                            {
+                              "Button": {
+                                "type": "submit",
+                                "children": "Next"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "return": { "$concat": ["$name", " ", "$surname"] }
+                }
+              ]
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-iframe="https://formity-examples.vercel.app/c"
+        ></section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Variables</h2>
+          <p>The <strong>variables</strong> object defines variables.</p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              {
+                "variables": "expression"
+              }
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+          data-auto-animate
+        >
+          <pre>
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              {
+                "variable": "value",
+                "variable": "value",
+                "...": "..."
+              }
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Example</h2>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-54|2-45|46-50|51-53">
+              [
+                {
+                  "form": {
+                    "defaultValues": {
+                      "name": "",
+                      "surname": ""
+                    },
+                    "resolver": {
+                      "name": [[{ "_$ne": ["_$name", ""] }, "Required"]],
+                      "surname": [[{ "_$ne": ["_$surname", ""] }, "Required"]]
+                    },
+                    "render": [
+                      {
+                        "LayoutForm": {
+                          "heading": "What is your name and surname?",
+                          "text": "Fill in your name and surname",
+                          "fields": [
+                            {
+                              "TextField": {
+                                "name": "name",
+                                "label": "Name",
+                                "placeholder": "Enter your name"
+                              }
+                            },
+                            {
+                              "TextField": {
+                                "name": "surname",
+                                "label": "Surname",
+                                "placeholder": "Enter your surname"
+                              }
+                            }
+                          ],
+                          "buttons": [
+                            {
+                              "Button": {
+                                "type": "submit",
+                                "children": "Next"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "variables": {
+                    "fullName": { "$concat": ["$name", " ", "$surname"] }
+                  }
+                },
+                {
+                  "return": "$fullName"
+                }
+              ]
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-iframe="https://formity-examples.vercel.app/d"
+        ></section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Cond</h2>
+          <p>The <strong>cond</strong> object defines a condition.</p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              {
+                "cond": {
+                  "if": "expression",
+                  "then": ["object", "object", "..."],
+                  "else": ["object", "object", "..."]
+                }
+              }
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Example</h2>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-88|2-36|37-81|39|40-78|79|82-87">
+              [
+                {
+                  "form": {
+                    "defaultValues": {
+                      "age": 25
+                    },
+                    "resolver": {},
+                    "render": [
+                      {
+                        "LayoutForm": {
+                          "heading": "What is your age?",
+                          "text": "Select your age",
+                          "fields": [
+                            {
+                              "Slider": {
+                                "name": "age",
+                                "label": "Age",
+                                "min": 1,
+                                "max": 100,
+                                "step": 1
+                              }
+                            }
+                          ],
+                          "buttons": [
+                            {
+                              "Button": {
+                                "type": "submit",
+                                "children": "Next"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "cond": {
+                    "if": { "$gte": ["$age", 18] },
+                    "then": [
+                      {
+                        "form": {
+                          "defaultValues": {
+                            "drivingLicense": false
+                          },
+                          "resolver": {},
+                          "render": [
+                            {
+                              "LayoutForm": {
+                                "heading": "Do you have a driving license?",
+                                "text": "Select your answer",
+                                "fields": [
+                                  {
+                                    "RadioGroup": {
+                                      "name": "drivingLicense",
+                                      "label": "Driving license",
+                                      "list": [
+                                        { "value": false, "label": "No" },
+                                        { "value": true, "label": "Yes" }
+                                      ]
+                                    }
+                                  }
+                                ],
+                                "buttons": [
+                                  { "Back": { "children": "Back" } },
+                                  {
+                                    "Button": {
+                                      "type": "submit",
+                                      "children": "Next"
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ],
+                    "else": [{ "variables": { "drivingLicense": false } }]
+                  }
+                },
+                {
+                  "return": {
+                    "age": "$age",
+                    "drivingLicense": "$drivingLicense"
+                  }
+                }
+              ]
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-iframe="https://formity-examples.vercel.app/e"
+        ></section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Loop</h2>
+          <p>The <strong>loop</strong> object defines a loop.</p>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              {
+                "loop": {
+                  "while": "expression",
+                  "do": ["object", "object", "..."]
+                }
+              }
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h2>Example</h2>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+          <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-78|2-12|13-72|15|16-70|17-21|22-57|58-69|73-77">
+            [
+              {
+                "variables": {
+                  "i": 0,
+                  "questions": [
+                    { "question": "Do you like football?", "value": "football" },
+                    { "question": "Do you like basketball?", "value": "basketball" },
+                    { "question": "Do you like tennis?", "value": "tennis" }
+                  ],
+                  "sports": []
+                }
+              },
+              {
+                "loop": {
+                  "while": { "$lt": ["$i", { "$size": "$questions" }] },
+                  "do": [
+                    {
+                      "variables": {
+                        "question": { "$arrayElemAt": ["$questions", "$i"] }
+                      }
+                    },
+                    {
+                      "form": {
+                        "defaultValues": {
+                          "like": "yes"
+                        },
+                        "resolver": {},
+                        "render": [
+                          {
+                            "LayoutForm": {
+                              "heading": "$question.question",
+                              "text": "Select if you like it or not",
+                              "fields": [
+                                {
+                                  "Select": {
+                                    "name": "like",
+                                    "label": "Do you like it?",
+                                    "list": [
+                                      { "label": "Yes", "value": "yes" },
+                                      { "label": "No", "value": "no" }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "buttons": [
+                                {
+                                  "Button": {
+                                    "type": "submit",
+                                    "children": "Next"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "variables": {
+                        "sports": {
+                          "$cond": {
+                            "if": { "$eq": ["$like", "yes"] },
+                            "then": { "$concatArrays": ["$sports", ["$question.value"]] },
+                            "else": "$sports"
+                          }
+                        },
+                        "i": { "$add": ["$i", 1] }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "return": {
+                  "sports": "$sports"
+                }
+              }
+            ]          
+          </code>
+        </pre>
+        </section>
+        <section
+          data-background-iframe="https://formity-examples.vercel.app/f"
+        ></section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <h1>Thanks</h1>
+          <h2 style="font-weight: 500">
+            <small>
+              You can find this package at
+              <a href="https://www.npmjs.com/package/formity"
+                >npmjs.com/package/formity</a
+              >
+            </small>
+          </h2>
+          <p>
+            <small>
+              Other projects at
+              <a href="https://martiserra.me">martiserra.me</a>
+            </small>
+          </p>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        progress: false,
+        controls: true,
+        backgroundImage: "./background.svg",
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>
