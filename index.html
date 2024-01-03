@@ -564,6 +564,57 @@
           data-background-size="auto"
           data-background-repeat="repeat"
         >
+          <pre>
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              const { mongu } = require('mongu')
+
+              const expr = { $add: ['$numbers.a', '$numbers.b'] }
+              
+              const vars = { numbers: { a: 5, b: 10 } }
+              
+              console.log(mongu(expr, vars)) // 15
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              const { mongu } = require('mongu')
+
+              const expr = { $add: ['$numbers.0', '$numbers.1'] }
+              
+              const vars = { numbers: [5, 10] }
+              
+              console.log(mongu(expr, vars)) // 15
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
+          <pre>
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              const { mongu } = require('mongu')
+
+              const expr = { _$add: ['_$a', '_$b'] }
+              
+              const vars = { a: 5, b: 10 }
+              
+              console.log(mongu(expr, vars)) // { $add: ["$a", "$b"] }              
+            </code>
+          </pre>
+        </section>
+        <section
+          data-background-image="./background.svg"
+          data-background-size="auto"
+          data-background-repeat="repeat"
+        >
           <h2>How To Use</h2>
           <p>Create the components and the JSON that defines the form</p>
         </section>
