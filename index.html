@@ -502,14 +502,14 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;">
-              const { mongu } = require('mongu')
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              const { mongu } = require("mongu");
 
-              const expr = { $add: ['$numbers.a', '$numbers.b'] }
+              const expr = { $add: ["$a", "$b"] };
               
-              const vars = { numbers: { a: 5, b: 10 } }
+              const vars = { a: 5, b: 10 };
               
-              console.log(mongu(expr, vars)) // 15
+              console.log(mongu(expr, vars)); // 15
             </code>
           </pre>
         </section>
@@ -519,14 +519,20 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;">
-              const { mongu } = require('mongu')
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              const { mongu } = require("mongu");
 
-              const expr = { $add: ['$numbers.0', '$numbers.1'] }
+              const expr = {
+                $cond: {
+                  if: { $gte: ["$age", 18] },
+                  then: "You are an adult",
+                  else: "You are not an adult",
+                },
+              };
               
-              const vars = { numbers: [5, 10] }
+              const vars = { age: 18 };
               
-              console.log(mongu(expr, vars)) // 15
+              console.log(mongu(expr, vars)); // "You are an adult"
             </code>
           </pre>
         </section>
@@ -536,14 +542,20 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;">
-              const { mongu } = require('mongu')
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+              const { mongu } = require("mongu");
 
-              const expr = { _$add: ['_$a', '_$b'] }
+              const expr = {
+                $map: {
+                  input: "$numbers",
+                  as: "num",
+                  in: { $multiply: ["$$num", 5] },
+                },
+              };
               
-              const vars = { a: 5, b: 10 }
+              const vars = { numbers: [1, 2, 3] };
               
-              console.log(mongu(expr, vars)) // { $add: ["$a", "$b"] }              
+              console.log(mongu(expr, vars)); // [5, 10, 15]
             </code>
           </pre>
         </section>
