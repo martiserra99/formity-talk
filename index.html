@@ -23,7 +23,7 @@
         >
           <h1>Formity</h1>
           <h2 style="font-weight: 500">
-            <small>Build dynamic React forms as easy as never </small>
+            <small>Build dynamic React forms easier than ever</small>
           </h2>
           <p>
             <small>
@@ -64,7 +64,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-271|2-51|52-87|88-132|133-146|147-184|185|186-262|263-270">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="1-271|2-51|52-87|88-132|133-146|147-184|185|186-262|263-270">
               [
                 {
                   "form": {
@@ -404,7 +404,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="9-31|10-19|23-30">
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="9-31|10-19|23-30">
               <script type="text/template">
                 import { useForm, FormProvider } from "react-hook-form";
 
@@ -447,7 +447,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="3-13|4|9|5|10">
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="3-13|4|9|5|10">
               <script type="text/template">
                 import { useFormContext } from "react-hook-form";
 
@@ -480,19 +480,19 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-13|3-8|10|12">
-              const { mongu } = require('mongu');
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="1-12|3-6|8|10|12">
+              const { mongu } = require("mongu");
 
               const expr = {
-                fullName: {
-                  $concat: [{ $toLower: '$name' }, ' ', { $toLower: '$surname' }],
-                },
-                isAdult: { $gte: ['$age', 18] },
+                fullName: { $concat: ["$name", " ", "$surname"] },
+                isAdult: { $gte: ["$age", 18] },
               };
               
-              const vars = { name: 'Marti', surname: 'Serra', age: 24 };
+              const vars = { name: "Marti", surname: "Serra", age: 24 };
               
-              console.log(mongu(expr, vars)); // { fullName: "marti serra", isAdult: true }
+              console.log(mongu(expr, vars));
+              
+              // { fullName: "Marti Serra", isAdult: true }                                       
             </code>
           </pre>
         </section>
@@ -502,7 +502,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;">
               const { mongu } = require('mongu')
 
               const expr = { $add: ['$numbers.a', '$numbers.b'] }
@@ -519,7 +519,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;">
               const { mongu } = require('mongu')
 
               const expr = { $add: ['$numbers.0', '$numbers.1'] }
@@ -536,7 +536,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;">
               const { mongu } = require('mongu')
 
               const expr = { _$add: ['_$a', '_$b'] }
@@ -569,7 +569,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="38-40|22-33">
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="38-40|22-33">
               <script type="text/template">
                 import "@radix-ui/themes/styles.css";
 
@@ -632,7 +632,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="31|9|14-16">
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="31|9|14-16">
               <script type="text/template">
                 import { useState } from "react";
 
@@ -687,7 +687,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-271|2-51|133-146|88-132|186-262|263-270">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="1-271|2-51|133-146|88-132|186-262|263-270">
               [
                 {
                   "form": {
@@ -976,7 +976,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;">
               {
                 "form": "expression"
               }
@@ -990,7 +990,7 @@
           data-auto-animate
         >
           <pre data-id="code-animation">
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-13">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="1-13">
               {
                 "form": {
                   "defaultValues": "...",
@@ -1008,7 +1008,7 @@
           data-auto-animate
         >
           <pre data-id="code-animation">
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="3-6">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="3-6">
               {
                 "form": {
                   "defaultValues": {
@@ -1029,7 +1029,7 @@
           data-auto-animate
         >
           <pre data-id="code-animation">
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="4-13">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="4-13">
               {
                 "form": {
                   "defaultValues": "...",
@@ -1056,7 +1056,7 @@
           data-auto-animate
         >
           <pre data-id="code-animation">
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="5-36">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="5-36">
               {
                 "form": {
                   "defaultValues": "...",
@@ -1114,7 +1114,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-56|2-49|4-7|8-13|14-47|50-55">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="1-56|2-49|4-7|8-13|14-47|50-55">
               [
                 {
                   "form": {
@@ -1190,7 +1190,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;">
               {
                 "return": "expression"
               }
@@ -1213,7 +1213,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-49|2-45|46-48">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="1-49|2-45|46-48">
               [
                 {
                   "form": {
@@ -1280,7 +1280,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;">
               {
                 "variables": "expression"
               }
@@ -1294,7 +1294,7 @@
           data-auto-animate
         >
           <pre>
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;">
               {
                 "variables": {
                   "fullName": "Marti Serra",
@@ -1320,7 +1320,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-54|2-45|46-50|51-53">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="1-54|2-45|46-50|51-53">
               [
                 {
                   "form": {
@@ -1392,7 +1392,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;">
               {
                 "cond": {
                   "if": "expression",
@@ -1419,7 +1419,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-88|2-36|37-81|39|40-78|79|82-87">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="1-88|2-36|37-81|39|40-78|79|82-87">
               [
                 {
                   "form": {
@@ -1525,7 +1525,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;">
+            <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;">
               {
                 "loop": {
                   "while": "expression",
@@ -1551,7 +1551,7 @@
           data-background-repeat="repeat"
         >
           <pre>
-          <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 16px; line-height: 1.5;" data-line-numbers="1-78|2-12|13-72|15|16-70|17-21|22-57|58-69|73-77">
+          <code class="hljs json" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="1-78|2-12|13-72|15|16-70|17-21|22-57|58-69|73-77">
             [
               {
                 "variables": {
