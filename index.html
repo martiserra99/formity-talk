@@ -504,7 +504,7 @@
         </section>
         <section>
           <pre>
-            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="38-40|22-33">
+            <code class="hljs javascript" data-trim style="background-color: #18191B; border-radius: 12px; font-size: 20px; line-height: 1.5;" data-line-numbers="40-42|24-35">
               <script type="text/template">
                 import "@radix-ui/themes/styles.css";
 
@@ -512,8 +512,9 @@
                 import ReactDOM from "react-dom/client";
                 import App from "./App.jsx";
                 import "./main.css";
+                import "./theme-config.css";
                 
-                import { Theme, Button } from "@radix-ui/themes";
+                import { Theme } from "@radix-ui/themes";
                 
                 import { FormityProvider } from "formity";
                 
@@ -526,6 +527,7 @@
                 import Slider from "./components/form/slider";
                 import Range from "./components/form/range";
                 import Back from "./components/back";
+                import Button from "./components/button";
                 
                 const components = {
                   LayoutForm,
@@ -536,19 +538,19 @@
                   CheckboxGroup,
                   Slider,
                   Range,
-                  Button,
                   Back,
+                  Button,
                 };
                 
                 ReactDOM.createRoot(document.getElementById("root")).render(
                   <React.StrictMode>
-                    <Theme panelBackground="translucent">
+                    <Theme appearance="dark" panelBackground="translucent">
                       <FormityProvider components={components}>
                         <App />
                       </FormityProvider>
                     </Theme>
                   </React.StrictMode>
-                );
+                );                
               </script>
             </code>
           </pre>
