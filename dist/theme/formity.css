@@ -3,7 +3,7 @@
  *
  * By Hakim El Hattab, http://hakim.se
  */
-@import url("https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Inter:wght@100..900&display=swap");
 section.has-light-background,
 section.has-light-background h1,
 section.has-light-background h2,
@@ -19,12 +19,12 @@ section.has-light-background h6 {
  *********************************************/
 :root {
   --r-background-color: #15161f;
-  --r-main-font: "Familjen Grotesk", sans-serif;
-  --r-main-font-size: 64px;
-  --r-main-color: #fff;
+  --r-main-font: "Hanken Grotesk", sans-serif;
+  --r-main-font-size: 48px;
+  --r-main-color: rgb(215, 215, 215);
   --r-block-margin: 20px;
   --r-heading-margin: 0 0 20px 0;
-  --r-heading-font: "Familjen Grotesk", sans-serif;
+  --r-heading-font: "Hanken Grotesk", sans-serif;
   --r-heading-color: #fff;
   --r-heading-line-height: 1;
   --r-heading-letter-spacing: normal;
@@ -32,10 +32,10 @@ section.has-light-background h6 {
   --r-heading-text-shadow: none;
   --r-heading-font-weight: 900;
   --r-heading1-text-shadow: none;
-  --r-heading1-size: 2.5em;
-  --r-heading2-size: 1.8em;
-  --r-heading3-size: 1.3em;
-  --r-heading4-size: 1em;
+  --r-heading1-size: 120px;
+  --r-heading2-size: 120px;
+  --r-heading3-size: 100px;
+  --r-heading4-size: 90px;
   --r-code-font: monospace;
   --r-link-color: #3e63dd;
   --r-link-color-dark: #1f41b0;
@@ -53,8 +53,10 @@ section.has-light-background h6 {
 .reveal {
   font-family: var(--r-main-font);
   font-size: var(--r-main-font-size);
-  font-weight: normal;
+  font-weight: 300;
   color: var(--r-main-color);
+  letter-spacing: -0.5;
+  line-height: 1.2;
 }
 
 .reveal ::selection {
